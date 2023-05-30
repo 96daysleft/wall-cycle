@@ -1,0 +1,29 @@
+{
+  "client_id": "<reddit client id>",
+  "client_secret": "<reddit clinet secret>",
+  "user_agent": "script by u/<reddit username>",
+  "filter": {
+    "keywords": [
+      "metroid",
+      "futurama",
+      "legos", 
+      "mario", 
+      "bob's burgers", 
+      "super mario",
+      "Linux",
+      "Tux",
+      "Earth Bound",
+      "Rick morty",
+      "Minecraft",
+      "linux mint",
+      "star wars",
+      "Daft Punk"
+     ],
+    "sub_reddits": ["wallpapers"],
+    "time": "all",
+    "imageCount": 2, 
+    "imageExtensions": ["png", "jpg", "jpeg"],
+    "sort":"new",
+    "postLimit":50
+  }
+}

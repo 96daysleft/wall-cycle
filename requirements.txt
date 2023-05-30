@@ -1,0 +1,6 @@
+praw
+requests
+Pillow
+selenium
+BeautifulSoup4
+webdriver_manager
