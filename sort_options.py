@@ -25,6 +25,10 @@ class SortOptions:
     @property
     def best(self):
         return "best"
+    
+    @property
+    def relevance(self):
+        return "relevance"
 
     def properties(self):
         return [prop for prop in dir(self) if isinstance(getattr(self, prop), property)]
