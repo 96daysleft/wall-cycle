@@ -1,9 +1,6 @@
 import json
 import os
 import sys
-import random
-from sort_options import SortOptions
-from time_options import TimeOptions
 
 class Config:
     checks =[]
@@ -18,57 +15,17 @@ class Config:
         with open(self.__config_json_file, "r") as f:
             config_json = json.load(f)
 
-        self.client_id = config_json["client_id"]
-        self.client_secret= config_json["client_secret"]
-        self.reddit_user = config_json["user_agent"]
-        self.pull_new_images = config_json["pull_new_images"]
-        self.random_keyword = config_json["random_keyword"]
+        self._wallpapers_path = config_json["wallpapersPath"]
+        self._image_extensions:list[str] = config_json["imageExtensions"]
 
-        self.user_agent = f"script by u/{self.reddit_user}"
+        if "~" in self._wallpapers_path:
+            self._wallpapers_path = os.path.expanduser(self._wallpapers_path)
 
-        #self.time_filter = config_json["filter"]["time"]
-        #self.sort = config_json["filter"]["sort"]
-        self.last_time_filter = None
-        self.last_sort = None
-        self.image_num = config_json["filter"]["imageCount"]
-        self.image_extensions = config_json["filter"]["imageExtensions"]
-        self.post_limit = config_json["filter"]["postLimit"]
-        self.keywords = config_json["filter"]["keywords"]
-        self.sub_reddits = config_json["filter"]["sub_reddits"]
-
-        self.search_sub_reddits ='+'.join(self.sub_reddits)
-
-        self.sort_options = SortOptions()
-        self.time_options = TimeOptions()
-    
-
-    def get_search_keyword(self):
-        if self.random_keyword:
-            return self.get_random_keyword()
-        else:
-            return self.get_all_keywords()
-
-    def get_all_keywords(self):
-        return ' OR '.join(['(' + self.convert_keyword(item) + ')' if ' ' in item else item for item in self.keywords])
-    
-    def get_random_keyword(self):
-        return self.convert_keyword(random.choice(self.keywords))
-    
-    def convert_keyword(self, keyword):
-        return keyword #.replace(' ', ' AND ')
-    
+   
     @property
-    def sort(self):
-        #self.last_time_filter = random.choice(self.sort_options)
-        self.last_time_filter = self.sort_options.relevance
-        return self.last_time_filter
-    
+    def wallpapers_path(self):
+        return self._wallpapers_path
+   
     @property
-    def time_filter(self):
-        #self.last_sort = random.choice(self.time_options)
-        self.last_sort = self.time_options.month
-        return self.last_sort
-    
-    @property
-    def image_extensions_tupple(self):
-        return tuple(self.image_extensions)
+    def image_extensions(self):
+        return self._image_extensions
